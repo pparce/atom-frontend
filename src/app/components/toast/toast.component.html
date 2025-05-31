@@ -1,0 +1,10 @@
+@for (item of messageService.toasts; track $index) {
+<ngb-toast           [autohide]="true"
+           [class]="item.classname"
+           [delay]="item.delay || 5000"
+           style="font-size: 16px;"
+           (hidden)="messageService.remove(item)">
+    <span><i class="me-2 fa "
+           [ngClass]="item.icon"></i></span>{{item.message}}
+</ngb-toast>
+}
