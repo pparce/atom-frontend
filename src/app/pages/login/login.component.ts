@@ -33,7 +33,7 @@ export class LoginComponent {
         this.connectionService.post({ url: ApiRoutes.AUTH_LOGIN, data: this.buildJSON() }).subscribe({
             next: (response) => {
                 this.authService.setLogin(response);
-                this.router.navigateByUrl('/admin');
+                this.router.navigateByUrl('/task');
                 this.messageService.removeAll();
                 this.messageService.success('Inicion de sesión exitoso');
             },
@@ -68,7 +68,7 @@ export class LoginComponent {
         this.connectionService.post({ url: ApiRoutes.AUTH_REGISTER, data: this.buildJSON() }).subscribe({
             next: (response) => {
                 this.authService.setLogin(response);
-                this.router.navigateByUrl('/admin');
+                this.router.navigateByUrl('/task');
                 this.messageService.removeAll();
                 this.messageService.success('Usuario creado exitosamente');
             }

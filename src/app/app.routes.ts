@@ -13,9 +13,9 @@ export const routes: Routes = [
         title: 'Login',
     },
     {
-        path: 'admin',
-        loadComponent: () => import('./pages/admin/admin.component').then(m => m.AdminComponent),
+        path: 'task',
+        loadComponent: () => import('./pages/task/task-list/task-list.component').then(m => m.TaskListComponent),
         canActivate: [AuthGuard],
-        title: 'Admin',
+        title: 'Listado de Tareas',
     }
 ];

@@ -1,5 +1,7 @@
 import { Component, computed, ElementRef, inject, signal, TemplateRef, viewChild } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
+import { EmptyScreenComponent } from '@components/empty-screen/empty-screen.component';
+import { LoadingComponent } from '@components/loading/loading.component';
 import { StopPropagationDirective } from '@directives/stop-propagation.directive';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AuthService } from '@services/auth.service';
@@ -9,22 +11,20 @@ import { ApiRoutes } from 'src/app/api.routes';
 import { Task } from 'src/app/models/task.interface';
 import { User } from 'src/app/models/user.interface';
 import { ServerData } from 'src/app/models/utils.interface';
-import { TaskFormModalComponent } from 'src/app/pages/admin/task-form-modal/task-form-modal.component';
-import { EmptyScreenComponent } from "../../components/empty-screen/empty-screen.component";
-import { LoadingComponent } from "../../components/loading/loading.component";
+import { TaskFormModalComponent } from 'src/app/pages/task/task-form-modal/task-form-modal.component';
 
 @Component({
-    selector: 'app-admin',
+    selector: 'app-task',
     imports: [
         RouterModule,
         LoadingComponent,
         EmptyScreenComponent,
         StopPropagationDirective
     ],
-    templateUrl: './admin.component.html',
-    styleUrl: './admin.component.scss',
+    templateUrl: './task-list.component.html',
+    styleUrl: './task-list.component.scss',
 })
-export class AdminComponent {
+export class TaskListComponent {
     tasks = signal<ServerData<Task[]>>({
         data: [],
         status: 'loading',

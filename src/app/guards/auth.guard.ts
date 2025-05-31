@@ -18,6 +18,6 @@ export const AuthAdminGuard: CanActivateFn = (route, state) => {
     if (authService.isAuthenticated()) {
         return true;
     }
-    router.navigate(['/admin/home']);
+    router.navigate(['/login']);
     return false;
 };
