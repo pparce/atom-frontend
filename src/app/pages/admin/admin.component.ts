@@ -1,5 +1,6 @@
-import { Component, inject, signal, TemplateRef } from '@angular/core';
+import { Component, computed, ElementRef, inject, signal, TemplateRef, viewChild } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
+import { StopPropagationDirective } from '@directives/stop-propagation.directive';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AuthService } from '@services/auth.service';
 import { ConnectionService } from '@services/connection.service';
@@ -17,7 +18,8 @@ import { LoadingComponent } from "../../components/loading/loading.component";
     imports: [
         RouterModule,
         LoadingComponent,
-        EmptyScreenComponent
+        EmptyScreenComponent,
+        StopPropagationDirective
     ],
     templateUrl: './admin.component.html',
     styleUrl: './admin.component.scss',
@@ -28,6 +30,15 @@ export class AdminComponent {
         status: 'loading',
     });
     user = signal<User>({});
+    taskUncompleted = computed(() => {
+        return this.tasks().data?.filter(task => !task.completed);
+    });
+    taskCompleted = computed(() => {
+        return this.tasks().data?.filter(task => task.completed);
+    });
+    selectedTask = signal<Task | null>(null);
+    logoutConfirmModal = viewChild<ElementRef<HTMLDialogElement>>('logoutConfirmModal');
+    deleteConfirmModal = viewChild<ElementRef<HTMLDialogElement>>('deleteConfirmModal');
 
     connectionService = inject(ConnectionService);
     messageService = inject(MessageService);
@@ -104,13 +115,31 @@ export class AdminComponent {
         });
     }
 
+    onDeleteTask() {
+        this.messageService.loading('Eliminando tarea...');
+        this.connectionService.delete(ConnectionService.buildUrlWithId(ApiRoutes.TASK, this.selectedTask()?.id)).subscribe({
+            next: () => {
+                this.tasks.update(tasks => {
+                    return {
+                        data: tasks.data?.filter(t => t.id !== this.selectedTask()?.id),
+                        status: 'success',
+                    };
+                });
+                this.messageService.removeAll();
+                this.messageService.success('Tarea eliminada correctamente');
+                this.selectedTask.set(null);
+            },
+            error: (error) => {
+                this.messageService.error(error.message || 'Error al eliminar la tarea');
+                this.messageService.removeAll();
+                this.messageService.error('Error al eliminar la tarea');
+            },
+        });
+    }
+
     onLogout(content: TemplateRef<any>) {
-        this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then(
-            (result) => {
-            },
-            (reason) => {
-            },
-        );
+        
+       
     }
 
     logout() {

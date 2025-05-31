@@ -1,71 +1,172 @@
-<div class="d-flex justify-content-center h-100 w-100">
-    <div class="content-page d-flex flex-column">
-        <!-- Toolbar -->
-        <div class="d-flex">
-            <div class="flex-fill">
-                <h1 class="mb-0">Panel de Administración</h1>
-                <p>Bienvenido al panel de administración.</p>
+<div class="position-relative h-100 w-100">
+    <div class="position-absolute left-0 top-0 d-flex justify-content-center h-100 w-100">
+        <div class="content-page d-flex flex-column">
+            <!-- Toolbar -->
+            <div class="d-flex">
+                <div class="flex-fill">
+                    <h1 class="mb-0">Panel de Administración</h1>
+                    <p>Bienvenido al panel de administración.</p>
+                </div>
+                <!-- Actions -->
+                <div class="d-flex gap-1 align-items-center">
+                    @if ((tasks().data?.length ?? 0) > 0) {
+                    <button class="btn btn-primary d-none d-md-flex"
+                            (click)="onAddTask()">Agregar Tarea</button>
+                    }
+                    <button class="btn-logout btn"
+                            data-bs-toggle="modal"
+                            data-bs-target="#logoutConfirm">
+                        <i class="fas fa-arrow-right-from-bracket"
+                           style="width: 16px; height: 16px;"></i>
+                    </button>
+                </div>
             </div>
-            <!-- Actions -->
-            <div class="d-flex gap-1 align-items-center">
-                <button class="btn-logout btn "
-                        (click)="onLogout(modalConfirm)">
-                    <i class="fas fa-arrow-right-from-bracket"
-                       style="width: 16px; height: 16px;"></i>
-                </button>
-            </div>
-        </div>
-        <!-- Content -->
-        <div class="flex-fill d-flex flex-column">
+            <!-- Content -->
+            <div class="flex-fill d-flex flex-column gap-1">
 
-            @if (tasks().status === 'success') {
-            @if ((tasks().data?.length ?? 0) > 0) {
-            @for (item of tasks().data; track $index) {
-            <!-- Task Item -->
-            <div class="task-item" (click)="onEditTask(item)">
-                <h5 class="title">{{ item.title }}</h5>
-                <p>{{ item.description }}</p>
-            </div>
-            }
-            } @else {
-            <div class="w-100 h-100">
-                <app-empty-screen icon="fas fa-tasks"
-                                  title="No hay tareas disponibles"
-                                  description="Actualmente no hay tareas disponibles. Por favor, vuelve más tarde o contacta con el administrador.">
-                    <button action
-                            class="btn btn-primary"
-                            (click)="onAddTask()">Crear Tarea</button>
-                </app-empty-screen>
+                @if (tasks().status === 'success') {
+                @if ((tasks().data?.length ?? 0) > 0) {
+                @for (item of taskUncompleted(); track $index) {
+                <!-- Task Item Uncompleted -->
+                <div class="task-item"
+                     (click)="onEditTask(item)">
+                    <div class="d-flex w-100">
+                        <div class="title d-flex w-100">
+                            <h5 class="flex-fill">{{ item.title }}</h5>
+                            <div stop-propagation
+                                 class="actions">
+                                <!-- <button class="btn btn-sm"
+                                    (click)="onEditTask(item)">
+                                <i class="fas fa-pen"></i>
+                            </button> -->
+                                <button class="btn btn-sm"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#deleteTaskConfirm"
+                                        (click)="selectedTask.set(item);">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
 
+                    <p>{{ item.description }}</p>
+                </div>
+                }
+                @if ((taskCompleted()?.length ?? 0) > 0) {
+                <hr>
+                }
+                @for (item of taskCompleted(); track $index) {
+                <!-- Task Item Completed -->
+                <div class="task-item disabled"
+                     (click)="onEditTask(item)">
+                    <div class="d-flex w-100">
+                        <div class="title d-flex w-100">
+                            <h5 class="flex-fill">{{ item.title }}</h5>
+                            <div stop-propagation
+                                 class="actions">
+                                <!-- <button class="btn btn-sm"
+                                    (click)="onEditTask(item)">
+                                <i class="fas fa-pen"></i>
+                            </button> -->
+                                <button class="btn btn-sm"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#deleteTaskConfirm"
+                                        (click)="selectedTask.set(item);">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <p>{{ item.description }}</p>
+                </div>
+                }
+                } @else {
+                <div class="w-100 h-100">
+                    <app-empty-screen icon="fas fa-tasks"
+                                      title="No hay tareas disponibles"
+                                      description="Actualmente no hay tareas disponibles. Por favor, vuelve más tarde o contacta con el administrador.">
+                        <button action
+                                class="btn btn-primary"
+                                (click)="onAddTask()">Crear Tarea</button>
+                    </app-empty-screen>
+
+                </div>
+                }
+                } @else {
+                <div class="h-100">
+                    <app-loading [error]="tasks().status === 'error'"
+                                 (onRetry)="getTasks()"></app-loading>
+                </div>
+                }
             </div>
-            }
-            } @else {
-            <div class="h-100">
-                <app-loading [error]="tasks().status === 'error'"
-                             (onRetry)="getTasks()"></app-loading>
-            </div>
-            }
         </div>
     </div>
+</div>
+<div class="position-fixed bottom-0 end-0 p-3 d-flex d-md-none">
+    <button class="btn btn-primary"
+            (click)="onAddTask()">Agregar Tarea</button>
 </div>
 
 
 <!-- logout confirm -->
-<ng-template #modalConfirm
-             let-modal>
-    <div class="modal-header">
-        <h4 class="modal-title">Confirmar cierre de sesión</h4>
+<div class="modal fade"
+     id="logoutConfirm"
+     tabindex="-1"
+     aria-labelledby="logoutConfirmLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Confirmar cierre de sesión</h4>
 
+            </div>
+            <div class="modal-body">
+                <p>¿Estás seguro de que deseas cerrar sesión?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button"
+                        data-bs-dismiss="modal"
+                        class="btn btn-light">Cancelar</button>
+                <button type="button"
+                        class="btn btn-primary"
+                        data-bs-dismiss="modal"
+                        (click)="logout()">Confirmar</button>
+            </div>
+        </div>
     </div>
-    <div class="modal-body">
-        <p>¿Estás seguro de que deseas cerrar sesión?</p>
+</div>
+
+<!-- logout confirm -->
+<div class="modal fade"
+     id="deleteTaskConfirm"
+     tabindex="-1"
+     aria-labelledby="deleteTaskConfirmLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Confirmar eliminación de tarea</h4>
+
+            </div>
+            <div class="modal-body">
+                <p>¿Estás seguro de que deseas eliminar la tarjeta con el titulo: <b>{{ selectedTask()?.title }}</b>?
+                </p>
+                <div class="alert alert-danger"
+                     role="alert">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    Esta acción no se puede deshacer.
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button"
+                        class="btn btn-light"
+                        data-bs-dismiss="modal">Cancelar</button>
+                <button type="button"
+                        class="btn btn-primary"
+                        data-bs-dismiss="modal"
+                        (click)="onDeleteTask()">Confirmar</button>
+            </div>
+        </div>
     </div>
-    <div class="modal-footer">
-        <button type="button"
-                class="btn btn-light"
-                (click)="modal.dismiss()">Cancelar</button>
-        <button type="button"
-                class="btn btn-primary"
-                (click)="modal.dismiss(); logout()">Confirmar</button>
-    </div>
-</ng-template>
+</div>
