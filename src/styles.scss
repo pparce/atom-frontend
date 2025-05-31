@@ -1,9 +1,17 @@
-
-
+$btn-border-radius: 50px;
 @import 'bootstrap/scss/bootstrap';
 
-html, body {
-  height: 100%;
-  width: 100%;
-  background-color: #f2f1ec;
+html,
+body {
+    height: 100%;
+    width: 100%;
+    background-color: #f2f1ec;
+    font-family: "Newsreader", serif;
+}
+
+.newsreader-font {
+    font-family: "Newsreader", serif;
+    font-optical-sizing: auto;
+    font-weight: 200;
+    font-style: normal;
 }
