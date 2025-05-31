@@ -7,6 +7,7 @@ import { User } from 'src/app/models/user.interface';
 @Injectable({ providedIn: 'root' })
 export class AuthService {
     private user: User | null = null;
+    private login: Login | null = null;
 
     private app_session_name = 'atom_session';
 
@@ -17,15 +18,21 @@ export class AuthService {
     }
 
     init() {
-        
+        const session = localStorage.getItem(this.app_session_name);
+        if (session) {
+            this.login = JSON.parse(session);
+            this.user = this.login && this.login.user ? this.login.user : null;
+        }
     }
 
     public setUser(user: User) {
-        
+
     }
 
     public setLogin(login: Login) {
-       
+        this.login = login;
+        this.user = login.user;
+        this.saveData();
     }
 
     public getUser(): User | null {
@@ -34,11 +41,18 @@ export class AuthService {
 
 
     public logout() {
-        
+
     }
 
     public isAuthenticated(): boolean {
         return this.user != null;
     }
 
+    private saveData() {
+        if (this.login) {
+            localStorage.setItem(this.app_session_name, JSON.stringify(this.login));
+        } else {
+            localStorage.removeItem(this.app_session_name);
+        }
+    }
 }
