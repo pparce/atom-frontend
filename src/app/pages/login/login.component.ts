@@ -51,7 +51,7 @@ export class LoginComponent {
     }
 
     onConfirmEmail() {
-        let modalRef = this.modalService.open(LoginConfirmModalComponent)
+        let modalRef = this.modalService.open(LoginConfirmModalComponent,{size: 'lg'})
         modalRef.componentInstance.email = this.email.value;
         modalRef.result.then((result) => {
             if (result) {
@@ -65,7 +65,20 @@ export class LoginComponent {
     }
 
     createUser() {
-
+        this.connectionService.post({ url: ApiRoutes.AUTH_REGISTER, data: this.buildJSON() }).subscribe({
+            next: (response) => {
+                this.authService.setLogin(response);
+                this.router.navigateByUrl('/admin');
+                this.messageService.removeAll();
+                this.messageService.success('Usuario creado exitosamente');
+            }
+            ,
+            error: (error) => {
+                console.log('Error al crear usuario', error);
+                this.messageService.removeAll();
+                this.messageService.error('Error al crear usuario: ' + error.error.message);
+            }
+        });
     }
 
     buildJSON() {

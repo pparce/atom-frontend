@@ -3,3 +3,12 @@
     padding: 100px 16px;
     width: 100%;
 }
+
+.btn-logout{
+    height: 36px;
+    width: 36px;
+    padding: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

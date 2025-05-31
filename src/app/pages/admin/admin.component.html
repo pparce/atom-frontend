@@ -1,1 +1,40 @@
-<p>admin works!</p>,
+<div class="d-flex justify-content-center">
+    <div class="content-page d-flex flex-column">
+        <!-- Toolbar -->
+        <div class="d-flex">
+            <div class="flex-fill">
+                <h1 class="mb-0">Panel de Administración</h1>
+                <p>Bienvenido al panel de administración.</p>
+            </div>
+            <!-- Actions -->
+            <div class="d-flex gap-1 align-items-center">
+                <button class="btn-logout btn btn-dark "
+                        (click)="onLogout(modalConfirm)">
+                    <i class="fas fa-arrow-right-from-bracket"
+                       style="width: 16px; height: 16px;"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- logout confirm -->
+<ng-template #modalConfirm
+             let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title">Confirmar cierre de sesión</h4>
+        
+    </div>
+    <div class="modal-body">
+        <p>¿Estás seguro de que deseas cerrar sesión?</p>
+    </div>
+    <div class="modal-footer">
+        <button type="button"
+                class="btn btn-light"
+                (click)="modal.dismiss()">Cancelar</button>
+        <button type="button"
+                class="btn btn-primary"
+                (click)="modal.dismiss(); logout()">Confirmar</button>
+    </div>
+</ng-template>
