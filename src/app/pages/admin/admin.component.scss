@@ -1,7 +1,13 @@
 .content-page {
     max-width: 48rem;
-    padding: 100px 16px;
+    padding: 100px 0;
     width: 100%;
+}
+
+.toolbar{
+    padding:16px;
+    border-bottom: 1px solid var(--bs-gray-300);
+    margin-bottom: 16px;
 }
 
 .btn-logout {
@@ -28,7 +34,7 @@
         display: none;
     }
 
-    p{
+    p {
         margin-bottom: 0;
     }
 
@@ -77,7 +83,22 @@
 // Mobile
 @media (max-width: 768px) {
     .content-page {
-        padding: 16px;
+        padding: 0;
+
+    }
+
+    .task-item {
+        border: 1px solid var(--bs-gray-300);
+
+        .actions {
+            display: flex;
+        }
+    }
+    .task-item.disabled {
+
+        .actions {
+            display: flex;
+        }
     }
 
 }

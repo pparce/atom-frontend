@@ -2,10 +2,10 @@
     <div class="position-absolute left-0 top-0 d-flex justify-content-center h-100 w-100">
         <div class="content-page d-flex flex-column">
             <!-- Toolbar -->
-            <div class="d-flex">
+            <div class="toolbar d-flex">
                 <div class="flex-fill">
-                    <h1 class="mb-0">Panel de Administración</h1>
-                    <p>Bienvenido al panel de administración.</p>
+                    <h1 class="mb-0">Mis Tareas</h1>
+                    <span>Listado de mis tareas.</span>
                 </div>
                 <!-- Actions -->
                 <div class="d-flex gap-1 align-items-center">
@@ -22,8 +22,7 @@
                 </div>
             </div>
             <!-- Content -->
-            <div class="flex-fill d-flex flex-column gap-1">
-
+            <div class="flex-fill d-flex flex-column gap-1 overflow-auto px-3 px-md-0 pe-md-3">
                 @if (tasks().status === 'success') {
                 @if ((tasks().data?.length ?? 0) > 0) {
                 @for (item of taskUncompleted(); track $index) {
@@ -137,7 +136,7 @@
     </div>
 </div>
 
-<!-- logout confirm -->
+<!-- delete confirm -->
 <div class="modal fade"
      id="deleteTaskConfirm"
      tabindex="-1"

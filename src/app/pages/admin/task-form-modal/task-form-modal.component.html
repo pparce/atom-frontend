@@ -1,5 +1,10 @@
-<div class="modal-header">
-    <h4 class="modal-title">{{ task?.id ? 'Editar tarea' : 'Crear tarea' }}</h4>
+<div class="modal-header d-flex">
+    <div class="d-flex w-100">
+        <h4 class="flex-fill modal-title ">{{ task?.id ? 'Editar tarea' : 'Crear tarea' }}</h4>
+        @if (task?.id) {
+        <div class="badge text-bg-secondary rounded-pill d-flex my-auto">{{task?.createdAt | date: 'short'}}</div>
+        }
+    </div>
 
 </div>
 <div class="modal-body modal-lg">
@@ -22,9 +27,9 @@
         </div>
         <div class="mb-3">
             <input type="checkbox"
-            id="completed"
-            class="form-check-input"
-            formControlName="completed">
+                   id="completed"
+                   class="form-check-input"
+                   formControlName="completed">
             <label for="completed"
                    class="form-label ms-3">Completada</label>
         </div>

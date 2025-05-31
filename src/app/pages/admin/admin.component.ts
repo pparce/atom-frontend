@@ -75,7 +75,7 @@ export class AdminComponent {
     }
 
     onAddTask() {
-        let modalRef = this.modalService.open(TaskFormModalComponent, { size: 'lg' });
+        let modalRef = this.modalService.open(TaskFormModalComponent, { size: 'md' });
         modalRef.componentInstance.user = this.user();
         modalRef.componentInstance.task = {} as Task;
         modalRef.result.then(
@@ -83,7 +83,7 @@ export class AdminComponent {
                 if (result) {
                     this.tasks.update(tasks => {
                         return {
-                            data: [...(tasks.data || []), result],
+                            data: [result, ...(tasks.data || [])],
                             status: 'success',
                         };
                     });
@@ -97,7 +97,7 @@ export class AdminComponent {
     }
 
     onEditTask(task: Task) {
-        let modalRef = this.modalService.open(TaskFormModalComponent, { size: 'lg' });
+        let modalRef = this.modalService.open(TaskFormModalComponent, { size: 'md' });
         modalRef.componentInstance.user = this.user();
         modalRef.componentInstance.task = task;
         modalRef.result.then(

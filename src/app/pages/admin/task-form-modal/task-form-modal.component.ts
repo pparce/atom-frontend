@@ -1,3 +1,4 @@
+import { DatePipe } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
@@ -10,7 +11,8 @@ import { User } from 'src/app/models/user.interface';
 @Component({
     selector: 'app-task-form-modal',
     imports: [
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        DatePipe
     ],
     templateUrl: './task-form-modal.component.html',
     styleUrl: './task-form-modal.component.scss',
@@ -89,6 +91,7 @@ export class TaskFormModalComponent {
             description: this.form.controls['description'].value,
             completed: this.form.controls['completed'].value,
             userId: this.user.id,
+            createdAt: this.task?.createdAt || new Date().toISOString(),
         };
     }
 }
