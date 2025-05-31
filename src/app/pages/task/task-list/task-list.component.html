@@ -34,11 +34,11 @@
                             <h5 class="flex-fill">{{ item.title }}</h5>
                             <div stop-propagation
                                  class="actions">
-                                <!-- <button class="btn btn-sm"
-                                    (click)="onEditTask(item)">
-                                <i class="fas fa-pen"></i>
-                            </button> -->
-                                <button class="btn btn-sm"
+                                <button class="btn btn-ghost btn-sm"
+                                        (click)="onCheckTask(item)">
+                                    <i class="fas fa-check"></i>
+                                </button>
+                                <button class="btn btn-ghost btn-sm"
                                         data-bs-toggle="modal"
                                         data-bs-target="#deleteTaskConfirm"
                                         (click)="selectedTask.set(item);">

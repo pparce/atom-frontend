@@ -41,3 +41,23 @@ body {
 ::-webkit-scrollbar-thumb:hover {
     background-color: #555;
 }
+
+.btn{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-ghost{
+    background-color: transparent;
+
+    &:hover {
+        background-color: var(--bs-primary);
+        color: var(--bs-white);
+    }
+
+    &:focus {
+        background-color: var(--bs-primary);
+        color: var(--bs-white);
+    }
+}

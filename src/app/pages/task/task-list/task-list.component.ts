@@ -115,6 +115,26 @@ export class TaskListComponent {
         });
     }
 
+    onCheckTask(task: Task) {
+        this.messageService.loading('Actualizando tarea...');
+        this.connectionService.put({ url: ConnectionService.buildUrlWithId(ApiRoutes.TASK, task.id), data: { completed: !task.completed } }).subscribe({
+            next: () => {
+                this.messageService.removeAll();
+                this.tasks.update(tasks => {
+                    return {
+                        data: tasks.data?.map(t => t.id === task.id ? { ...t, completed: !t.completed } : t),
+                        status: 'success',
+                    };
+                });
+                this.messageService.success('Tarea actualizada correctamente');
+            },
+            error: (error) => {
+                this.messageService.removeAll();
+                this.messageService.error(error.message || 'Error al actualizar la tarea');
+            },
+        });
+    }
+
     onDeleteTask() {
         this.messageService.loading('Eliminando tarea...');
         this.connectionService.delete(ConnectionService.buildUrlWithId(ApiRoutes.TASK, this.selectedTask()?.id)).subscribe({
@@ -136,6 +156,7 @@ export class TaskListComponent {
             },
         });
     }
+    
 
     onLogout(content: TemplateRef<any>) {
         
