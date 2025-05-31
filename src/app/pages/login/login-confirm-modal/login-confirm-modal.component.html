@@ -1,0 +1,18 @@
+<div class="modal-header">
+    <h4 class="modal-title">Creación de usuario</h4>
+
+</div>
+<div class="modal-body">
+    <p>Este correo electronico {{ email }} no esta registrado.</p>
+    <p>¿Desea crear un nuevo usuario con este correo electrónico?</p>
+    <p>Si confirmas, se creará un nuevo usuario con el correo electrónico proporcionado.</p>
+    <p>Si no estás seguro, puedes cancelar y volver a la pantalla de inicio de sesión.</p>
+</div>
+<div class="modal-footer">
+    <button type="button"
+            class="btn btn-outline-secondary"
+            (click)="onCancel()">Cancelar</button>
+    <button type="button"
+            class="btn btn-primary"
+            (click)="onConfirm()">Confirmar</button>
+</div>

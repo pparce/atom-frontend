@@ -1,0 +1,24 @@
+<div class="w-100 h-100 d-flex justify-content-center align-items-center">
+    <div class="card">
+        <div class="card-body p-5 d-flex flex-column align-items-center">
+            <h5>Bienvenido a Atom Tasks</h5>
+            <p class="card-text">Por favor, ingresa tu correo electrónico para continuar.</p>
+            <div class="mb-3 mt-4 d-flex justify-content-center flex-column align-items-center w-100">
+                <label for="exampleFormControlInput1"
+                       class="form-label">Correo Electrónico</label>
+                <input type="email"
+                       class="form-control text-center"
+                       id="exampleFormControlInput1"
+                       [formControl]="email"
+                       placeholder="nombre@example.com">
+            </div>
+            <div class="d-flex justify-content-center w-100">
+                <button type="button"
+                        class="btn btn-primary w-100"
+                        [disabled]="email.invalid"
+                        (click)="onLogin()">Continuar
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
