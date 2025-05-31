@@ -5,7 +5,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
     selector: 'app-login-confirm-modal',
     imports: [],
     templateUrl: './login-confirm-modal.component.html',
-    styleUrl: './login-confirm-modal.component.css',
+    styleUrl: './login-confirm-modal.component.scss',
 })
 export class LoginConfirmModalComponent {
     email: string = '';

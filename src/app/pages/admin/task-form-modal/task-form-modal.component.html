@@ -1,0 +1,41 @@
+<div class="modal-header">
+    <h4 class="modal-title">{{ task?.id ? 'Editar tarea' : 'Crear tarea' }}</h4>
+
+</div>
+<div class="modal-body modal-lg">
+    <form [formGroup]="form">
+        <div class="mb-3">
+            <label for="title"
+                   class="form-label">Título</label>
+            <input type="text"
+                   id="title"
+                   class="form-control"
+                   formControlName="title">
+        </div>
+        <div class="mb-3">
+            <label for="description"
+                   class="form-label">Descripción</label>
+            <textarea id="description"
+                      class="form-control"
+                      rows="5"
+                      formControlName="description"></textarea>
+        </div>
+        <div class="mb-3">
+            <label for="completed"
+                   class="form-label">¿Completada?</label>
+            <input type="checkbox"
+                   id="completed"
+                   class="form-check-input"
+                   formControlName="completed">
+        </div>
+    </form>
+</div>
+<div class="modal-footer">
+    <button type="button"
+            class="btn btn-light"
+            (click)="onCancel()">Cancelar</button>
+    <button type="button"
+            class="btn btn-primary"
+            [disabled]="form.invalid"
+            (click)="onSave()">Salvar</button>
+</div>

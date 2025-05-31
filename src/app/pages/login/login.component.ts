@@ -14,7 +14,7 @@ import { LoginConfirmModalComponent } from 'src/app/pages/login/login-confirm-mo
         ReactiveFormsModule,
     ],
     templateUrl: './login.component.html',
-    styleUrl: './login.component.css',
+    styleUrl: './login.component.scss',
 })
 export class LoginComponent {
     email = new FormControl('', [

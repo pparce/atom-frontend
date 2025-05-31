@@ -1,4 +1,4 @@
-<div class="d-flex justify-content-center">
+<div class="d-flex justify-content-center h-100 w-100">
     <div class="content-page d-flex flex-column">
         <!-- Toolbar -->
         <div class="d-flex">
@@ -8,12 +8,43 @@
             </div>
             <!-- Actions -->
             <div class="d-flex gap-1 align-items-center">
-                <button class="btn-logout btn btn-dark "
+                <button class="btn-logout btn "
                         (click)="onLogout(modalConfirm)">
                     <i class="fas fa-arrow-right-from-bracket"
                        style="width: 16px; height: 16px;"></i>
                 </button>
             </div>
+        </div>
+        <!-- Content -->
+        <div class="flex-fill d-flex flex-column">
+
+            @if (tasks().status === 'success') {
+            @if ((tasks().data?.length ?? 0) > 0) {
+            @for (item of tasks().data; track $index) {
+            <!-- Task Item -->
+            <div class="task-item" (click)="onEditTask(item)">
+                <h5 class="title">{{ item.title }}</h5>
+                <p>{{ item.description }}</p>
+            </div>
+            }
+            } @else {
+            <div class="w-100 h-100">
+                <app-empty-screen icon="fas fa-tasks"
+                                  title="No hay tareas disponibles"
+                                  description="Actualmente no hay tareas disponibles. Por favor, vuelve más tarde o contacta con el administrador.">
+                    <button action
+                            class="btn btn-primary"
+                            (click)="onAddTask()">Crear Tarea</button>
+                </app-empty-screen>
+
+            </div>
+            }
+            } @else {
+            <div class="h-100">
+                <app-loading [error]="tasks().status === 'error'"
+                             (onRetry)="getTasks()"></app-loading>
+            </div>
+            }
         </div>
     </div>
 </div>
@@ -24,7 +55,7 @@
              let-modal>
     <div class="modal-header">
         <h4 class="modal-title">Confirmar cierre de sesión</h4>
-        
+
     </div>
     <div class="modal-body">
         <p>¿Estás seguro de que deseas cerrar sesión?</p>
