@@ -1,3 +1,4 @@
+import { DatePipe } from '@angular/common';
 import { Component, computed, ElementRef, inject, signal, TemplateRef, viewChild } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { EmptyScreenComponent } from '@components/empty-screen/empty-screen.component';
@@ -19,7 +20,8 @@ import { TaskFormModalComponent } from 'src/app/pages/task/task-form-modal/task-
         RouterModule,
         LoadingComponent,
         EmptyScreenComponent,
-        StopPropagationDirective
+        StopPropagationDirective,
+        DatePipe
     ],
     templateUrl: './task-list.component.html',
     styleUrl: './task-list.component.scss',

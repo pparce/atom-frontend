@@ -13,12 +13,31 @@
                     <button class="btn btn-primary d-none d-md-flex"
                             (click)="onAddTask()">Agregar Tarea</button>
                     }
-                    <button class="btn-logout btn"
+                    <div class="dropdown">
+                        <button class="btn btn-ghost"
+                                type="button"
+                                data-bs-toggle="dropdown"
+                                aria-expanded="false">
+                            <i class="fas fa-ellipsis-v"></i>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end mt-3">
+                            <li>
+                                <a class="dropdown-item d-flex gap-3 align-items-center"
+                                   data-bs-toggle="modal"
+                                   data-bs-target="#logoutConfirm">
+                                    <i class="fas fa-arrow-right-from-bracket"></i>
+                                    <span>Cerrar sesión</span>
+                                </a>
+                            </li>
+
+                        </ul>
+                    </div>
+                    <!-- <button class="btn-logout btn"
                             data-bs-toggle="modal"
                             data-bs-target="#logoutConfirm">
                         <i class="fas fa-arrow-right-from-bracket"
                            style="width: 16px; height: 16px;"></i>
-                    </button>
+                    </button> -->
                 </div>
             </div>
             <!-- Content -->
@@ -48,10 +67,15 @@
                         </div>
                     </div>
 
-                    <p>{{ item.description }}</p>
+                    <div class="d-flex gap-3">
+                        <p class="flex-fill">{{ item.description }}</p>
+                        <div class="badge text-bg-secondary rounded-pill d-flex my-auto">
+                            {{item.createdAt | date:'short'}}
+                        </div>
+                    </div>
                 </div>
                 }
-                @if ((taskCompleted()?.length ?? 0) > 0) {
+                @if ((taskCompleted()?.length ?? 0) > 0 && (taskUncompleted()?.length ?? 0) > 0) {
                 <hr>
                 }
                 @for (item of taskCompleted(); track $index) {
@@ -77,7 +101,12 @@
                         </div>
                     </div>
 
-                    <p>{{ item.description }}</p>
+                    <div class="d-flex gap-3">
+                        <p class="flex-fill">{{ item.description }}</p>
+                        <div class="badge text-bg-secondary rounded-pill d-flex my-auto">
+                            {{item.createdAt | date:'short'}}
+                        </div>
+                    </div>
                 </div>
                 }
                 } @else {
@@ -103,8 +132,10 @@
     </div>
 </div>
 <div class="position-fixed bottom-0 end-0 p-3 d-flex d-md-none">
+    @if ((tasks().data?.length ?? 0) > 0) {
     <button class="btn btn-primary"
             (click)="onAddTask()">Agregar Tarea</button>
+    }
 </div>
 
 
