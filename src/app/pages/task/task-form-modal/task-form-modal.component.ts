@@ -65,7 +65,7 @@ export class TaskFormModalComponent {
             },
             error: (error) => {
                 this.messageService.removeAll();
-                this.messageService.error(error.message || 'Error al agregar la tarea');
+                this.messageService.error(error.error['errors'] || 'Error al agregar la tarea');
             }
         });
     }
@@ -79,7 +79,7 @@ export class TaskFormModalComponent {
             },
             error: (error) => {
                 this.messageService.removeAll();
-                this.messageService.error(error.message || 'Error al actualizar la tarea');
+                this.messageService.error(error.error['errors'] || 'Error al actualizar la tarea');
             }
         });
     }
