@@ -1,15 +1,8 @@
-const api_host = 'https://firebase';
+const api_host = 'https://api-e7sshnd4va-uc.a.run.app';
 export const environment = {
     apiServer: api_host + '/api',
     filesServer: api_host,
     production: false,
 };
 
-export const firebaseConfig = {
-    apiKey: "your-api-key",
-    authDomain: "your-auth-domain",
-    projectId: "your-project-id",
-    storageBucket: "your-storage-bucket",
-    messagingSenderId: "your-messaging-sender-id",
-    appId: "your-app-id"
-};
+
