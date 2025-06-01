@@ -9,6 +9,7 @@
                 <input type="email"
                        class="form-control text-center"
                        id="exampleFormControlInput1"
+                       (keydown.enter)="onLogin()"
                        [formControl]="email"
                        placeholder="nombre@example.com">
             </div>
