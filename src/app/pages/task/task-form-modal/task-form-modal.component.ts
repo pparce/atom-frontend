@@ -86,7 +86,7 @@ export class TaskFormModalComponent {
 
     buildJSON() {
         return {
-            ...(this.task ? { id: this.task.id } : {}),
+            ...(this.task?.id ? { id: this.task.id } : {}),
             title: this.form.controls['title'].value,
             description: this.form.controls['description'].value,
             completed: this.form.controls['completed'].value,

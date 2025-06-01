@@ -106,7 +106,7 @@ export class TaskListComponent {
             (result) => {
                 this.tasks.update(tasks => {
                     return {
-                        data: tasks.data?.map(t => t.id === task.id ? result : t) || [],
+                        data: tasks.data?.map(t => t.id === task.id ? result : t),
                         status: 'success',
                     };
                 });
