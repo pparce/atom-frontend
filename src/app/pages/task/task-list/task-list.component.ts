@@ -119,7 +119,7 @@ export class TaskListComponent {
 
     onCheckTask(task: Task) {
         this.messageService.loading('Actualizando tarea...');
-        this.connectionService.put({ url: ConnectionService.buildUrlWithId(ApiRoutes.TASK, task.id), data: { completed: !task.completed } }).subscribe({
+        this.connectionService.patch({ url: ConnectionService.buildUrlWithId(ApiRoutes.TASK, task.id), data: { completed: !task.completed } }).subscribe({
             next: () => {
                 this.messageService.removeAll();
                 this.tasks.update(tasks => {

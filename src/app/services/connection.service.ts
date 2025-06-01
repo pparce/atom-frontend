@@ -52,6 +52,11 @@ export class ConnectionService {
         return this.http.put(urlAux, data.data);
     }
 
+    public patch(data: Post): Observable<any> {
+        let urlAux: string = environment.apiServer + data.url;
+        return this.http.patch(urlAux, data.data);
+    }
+
     public delete(url: string): Observable<any> {
         let urlAux: string = environment.apiServer + url;
         return this.http.delete(urlAux);
