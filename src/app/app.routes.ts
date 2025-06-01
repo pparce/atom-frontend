@@ -17,5 +17,10 @@ export const routes: Routes = [
         loadComponent: () => import('./pages/task/task-list/task-list.component').then(m => m.TaskListComponent),
         canActivate: [AuthGuard],
         title: 'Listado de Tareas',
+    },
+    {
+        path: '**',
+        redirectTo: '/login',
     }
+    
 ];

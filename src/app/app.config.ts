@@ -1,7 +1,8 @@
 import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
 import { provideRouter, withComponentInputBinding, withInMemoryScrolling, withViewTransitions } from '@angular/router';
+import { authInterceptor } from './interceptors/auth.interceptor';
 
-import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { routes } from './app.routes';
 
 export const appConfig: ApplicationConfig = {
@@ -12,8 +13,10 @@ export const appConfig: ApplicationConfig = {
             withViewTransitions(),
             withComponentInputBinding(),
             withInMemoryScrolling({ scrollPositionRestoration: 'enabled' })
-            
+
         ),
-        provideHttpClient(),
+        provideHttpClient(
+            withInterceptors([authInterceptor])
+        ),
     ]
 };

@@ -1,5 +1,4 @@
 import { inject, Injectable } from '@angular/core';
-// import { merge } from 'lodash';
 import { Router } from '@angular/router';
 import { Login } from 'src/app/models/login.interface';
 import { User } from 'src/app/models/user.interface';
@@ -39,13 +38,19 @@ export class AuthService {
         return this.user;
     }
 
+    public getLogin(): Login | null {
+        return this.login;
+    }
 
     public logout() {
-
+        this.login = null;
+        this.user = null;
+        this.saveData();
+        this.router.navigate(['/login']);
     }
 
     public isAuthenticated(): boolean {
-        return this.user != null;
+        return this.login !== null && this.login.token !== '';
     }
 
     private saveData() {
